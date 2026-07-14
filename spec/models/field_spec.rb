@@ -21,5 +21,18 @@ RSpec.describe Field, type: :model do
       field = create(:field, farm: farm)
       expect(field.farm).to eq(farm)
     end
+
+    it "tem muitos sensores" do
+      field = create(:field)
+      create(:sensor, field: field)
+      create(:sensor, field: field)
+      expect(field.sensors.count).to eq(2)
+    end
+
+    it "remove os sensores em cascata ao ser destruído" do
+      field = create(:field)
+      create(:sensor, field: field)
+      expect { field.destroy }.to change(Sensor, :count).by(-1)
+    end
   end
 end

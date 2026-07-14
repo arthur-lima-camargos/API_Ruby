@@ -77,7 +77,7 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 ### Fase 2 — Modelagem do domínio
 - [ ] Models: User, Farm, Field, Sensor, Reading
 - [ ] Associations e validações
-- [ ] Enum de tipo de sensor (umidade, temperatura, pH)
+- [x] Enum de tipo de sensor (umidade, temperatura, pH)
 - [ ] Migrations
 
 ### Fase 3 — Autenticação JWT
