@@ -44,4 +44,19 @@ RSpec.describe User, type: :model do
       expect(user.authenticate("errada")).to be_falsey
     end
   end
+
+  describe "associações" do
+    it "tem muitas fazendas" do
+      user = create(:user)
+      create(:farm, user: user)
+      create(:farm, user: user)
+      expect(user.farms.count).to eq(2)
+    end
+
+    it "remove as fazendas em cascata ao ser destruído" do
+      user = create(:user)
+      create(:farm, user: user)
+      expect { user.destroy }.to change(Farm, :count).by(-1)
+    end
+  end
 end

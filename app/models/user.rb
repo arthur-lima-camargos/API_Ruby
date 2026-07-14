@@ -3,6 +3,9 @@ class User < ApplicationRecord
   # senha em texto puro) e fornece os métodos `password=` e `authenticate`.
   has_secure_password
 
+  # Um usuário é dono de várias fazendas; removê-lo apaga as fazendas em cascata.
+  has_many :farms, dependent: :destroy
+
   # Padroniza o e-mail antes de validar/salvar: sem espaços e em minúsculas,
   # para que "  Joao@Fazenda.com " e "joao@fazenda.com" sejam tratados como iguais.
   normalizes :email, with: ->(email) { email.strip.downcase }
