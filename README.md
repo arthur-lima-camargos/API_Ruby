@@ -72,7 +72,7 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [x] Gerar aplicação Rails em modo API com PostgreSQL
 - [x] Configurar RSpec, FactoryBot e Faker
 - [ ] Configurar RuboCop
-- [ ] Criar e migrar o banco de dados
+- [x] Criar e migrar o banco de dados
 
 ### Fase 2 — Modelagem do domínio
 - [ ] Models: User, Farm, Field, Sensor, Reading
