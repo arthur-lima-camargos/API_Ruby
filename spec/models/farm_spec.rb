@@ -21,5 +21,18 @@ RSpec.describe Farm, type: :model do
       farm = create(:farm, user: user)
       expect(farm.user).to eq(user)
     end
+
+    it "tem muitos talhões" do
+      farm = create(:farm)
+      create(:field, farm: farm)
+      create(:field, farm: farm)
+      expect(farm.fields.count).to eq(2)
+    end
+
+    it "remove os talhões em cascata ao ser destruída" do
+      farm = create(:farm)
+      create(:field, farm: farm)
+      expect { farm.destroy }.to change(Field, :count).by(-1)
+    end
   end
 end
