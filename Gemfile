@@ -47,4 +47,13 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # RSpec test framework integrated with Rails
+  gem "rspec-rails"
+
+  # Factories for building test data
+  gem "factory_bot_rails"
+
+  # Fake data for tests and seeds
+  gem "faker"
 end

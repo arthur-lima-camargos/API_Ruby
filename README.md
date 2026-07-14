@@ -70,7 +70,7 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 
 ### Fase 1 — Scaffold da aplicação Rails
 - [x] Gerar aplicação Rails em modo API com PostgreSQL
-- [ ] Configurar RSpec, FactoryBot e Faker
+- [x] Configurar RSpec, FactoryBot e Faker
 - [ ] Configurar RuboCop
 - [ ] Criar e migrar o banco de dados
 
