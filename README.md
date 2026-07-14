@@ -66,10 +66,10 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 ### Fase 0 — Ambiente e fundação
 - [x] Ambiente de desenvolvimento (Ruby, Rails, PostgreSQL) montado no WSL2 / Ubuntu
 - [x] Objetivos e escopo documentados (este README)
-- [ ] Repositório git inicializado e publicado no GitHub
+- [x] Repositório git inicializado e publicado no GitHub
 
 ### Fase 1 — Scaffold da aplicação Rails
-- [ ] Gerar aplicação Rails em modo API com PostgreSQL
+- [x] Gerar aplicação Rails em modo API com PostgreSQL
 - [ ] Configurar RSpec, FactoryBot e Faker
 - [ ] Configurar RuboCop
 - [ ] Criar e migrar o banco de dados
