@@ -75,10 +75,10 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [x] Criar e migrar o banco de dados
 
 ### Fase 2 — Modelagem do domínio
-- [ ] Models: User, Farm, Field, Sensor, Reading
-- [ ] Associations e validações
+- [x] Models: User, Farm, Field, Sensor, Reading
+- [x] Associations e validações
 - [x] Enum de tipo de sensor (umidade, temperatura, pH)
-- [ ] Migrations
+- [x] Migrations
 
 ### Fase 3 — Autenticação JWT
 - [ ] User com `has_secure_password` (bcrypt)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_135139) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_142807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_135139) do
     t.index ["farm_id"], name: "index_fields_on_farm_id"
   end
 
+  create_table "readings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "recorded_at", null: false
+    t.bigint "sensor_id", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "value", precision: 8, scale: 2, null: false
+    t.index ["sensor_id"], name: "index_readings_on_sensor_id"
+  end
+
   create_table "sensors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "field_id", null: false
@@ -51,5 +60,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_135139) do
 
   add_foreign_key "farms", "users"
   add_foreign_key "fields", "farms"
+  add_foreign_key "readings", "sensors"
   add_foreign_key "sensors", "fields"
 end

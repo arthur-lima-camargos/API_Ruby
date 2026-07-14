@@ -87,7 +87,7 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
 - **Aceite:**
   - `POST /api/v1/sensors/:id/readings` cria a leitura.
   - `value` é decimal; `recorded_at` aceita timestamp; default = agora se ausente.
-  - Rejeita valores absurdos fora de uma faixa de sanidade por tipo de sensor.
+  - O model valida apenas presença de `value`/`recorded_at`. Valor fora da faixa realista **não** é rejeitado na persistência — faixa é tratada como alerta (Épico 6), não como validação.
 
 ### US-5.2 — Histórico de leituras
 **Como** produtor, **quero** consultar o histórico de leituras de um sensor por período, **para** analisar tendências.
