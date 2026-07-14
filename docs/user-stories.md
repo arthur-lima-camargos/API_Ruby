@@ -136,3 +136,19 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
 ## Definition of Done
 
 Uma história está "pronta" quando: endpoint implementado conforme aceite; testes passando; linter limpo; documentação (README/docs) atualizada se o contrato mudou; sem segredos commitados.
+
+---
+
+## Futuro / Backlog (fora do escopo atual)
+
+Ideias registradas para evolução futura do produto. **Não fazem parte do MVP** e não têm implementação prevista nesta fase — ficam documentadas para não se perderem.
+
+### BKLG-1 — Geolocalização e mapas
+**Como** produtor, **quero** visualizar fazendas, talhões e sensores em um mapa, **para** enxergar espacialmente a operação (agricultura de precisão).
+
+- **Contexto de modelagem:** cada entidade tem uma geometria distinta — o talhão (`Field`) é uma *área* (polígono), o sensor (`Sensor`) é um *ponto* (lat/lng), e a fazenda (`Farm`) pode ser ponto (sede) ou polígono (perímetro). Hoje `Farm.location` é apenas texto livre, sem valor geográfico.
+- **Abordagens possíveis (da mais simples à mais robusta):**
+  - Colunas `latitude`/`longitude` (decimal) para "pins" simples no mapa.
+  - GeoJSON em coluna `jsonb` para guardar polígonos sem consultas espaciais.
+  - **PostGIS** (extensão do PostgreSQL + gem `activerecord-postgis-adapter`) para geometrias e consultas espaciais reais ("sensores dentro deste talhão", distâncias, áreas).
+- **Nota técnica:** é uma evolução **puramente aditiva** (novas colunas/tabelas via migration), então adiar não gera retrabalho sobre o schema atual.
