@@ -5,6 +5,13 @@ module Api
     class BaseController < ApplicationController
       before_action :authenticate_request
 
+      # Recurso inexistente OU fora do escopo do usuário cai aqui: como todas as
+      # buscas partem de current_user, um id de outro dono simplesmente "não é
+      # encontrado" — respondemos 404 sem vazar a existência do recurso alheio.
+      rescue_from ActiveRecord::RecordNotFound do
+        render json: { error: "Não encontrado" }, status: :not_found
+      end
+
       private
 
       attr_reader :current_user
