@@ -2,10 +2,16 @@ module Api
   module V1
     class SensorsController < BaseController
       before_action :set_field, only: %i[index create]
-      before_action :set_sensor, only: %i[show update destroy]
+      before_action :set_sensor, only: %i[show update destroy summary]
 
       def index
         render json: SensorSerializer.new(@field.sensors).serializable_hash
+      end
+
+      # Médias/mín/máx + alerta do sensor no período (?period=24h|7d|30d).
+      # O hash de resposta é montado no service object, não aqui.
+      def summary
+        render json: ReadingsSummary.new(@sensor, period: params[:period]).call
       end
 
       def show
