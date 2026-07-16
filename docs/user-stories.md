@@ -129,6 +129,8 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
 **Como** desenvolvedor, **quero** popular o banco com dados plausíveis, **para** exercitar a API sem hardware.
 - **Aceite:** `db/seeds.rb` cria usuário demo, fazenda, talhões, sensores e leituras dentro das faixas realistas.
 
+> **Nota (Fase 6):** conta demo `demo@fazenda.com` / `password123` com 2 fazendas, 4 talhões, 12 sensores e ~1.440 leituras (30 dias, uma a cada 6h). Idempotente (recria só a conta demo). As faixas de geração vêm de `AlertEvaluator::IDEAL_RANGES` (fonte única); dois sensores são enviesados para fora da faixa para demonstrar alertas `low`/`high` no `summary`. Leituras gravadas via `insert_all`.
+
 ### US-7.2 — Simulador ao vivo (opcional)
 **Como** desenvolvedor, **quero** um script que faça POST periódico de leituras, **para** simular dispositivos enviando dados em tempo real.
 - **Aceite:** script parametrizável (intervalo, sensores) gerando valores dentro das faixas de cada tipo.

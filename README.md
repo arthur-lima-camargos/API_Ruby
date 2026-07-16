@@ -106,7 +106,7 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [x] Endpoint `summary`
 
 ### Fase 6 — Dados de simulação
-- [ ] Seeds com dados plausíveis
+- [x] Seeds com dados plausíveis (usuário demo, 2 fazendas, 4 talhões, 12 sensores, ~1.440 leituras)
 - [ ] (Opcional) simulador de leituras ao vivo
 
 ### Fase 7 — Testes e qualidade
@@ -126,6 +126,8 @@ rails db:create db:migrate db:seed
 
 rails server   # API em http://localhost:3000
 ```
+
+O `db:seed` cria uma conta demo — **`demo@fazenda.com` / `password123`** — com fazendas, talhões, sensores e ~1.440 leituras dos últimos 30 dias. Dois sensores são propositalmente enviesados para fora da faixa, então o `summary` deles demonstra alertas `low`/`high`. O seed é idempotente (recria só a conta demo a cada execução).
 
 ## Testes
 
