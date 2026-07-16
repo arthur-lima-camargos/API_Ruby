@@ -81,10 +81,10 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [x] Migrations
 
 ### Fase 3 — Autenticação JWT
-- [ ] User com `has_secure_password` (bcrypt)
-- [ ] `POST /signup` e `POST /login` retornando o token
-- [ ] `before_action` que decodifica o token e define `current_user`
-- [ ] Escopo de dados a partir de `current_user`
+- [x] User com `has_secure_password` (bcrypt)
+- [x] `POST /signup` e `POST /login` retornando o token
+- [x] `before_action` que decodifica o token e define `current_user` (`Api::V1::BaseController`)
+- [ ] Escopo de dados a partir de `current_user` (aplicado nos endpoints da Fase 4)
 
 ### Fase 4 — Endpoints REST (CRUD)
 - [ ] Farms, Fields e Sensors escopados por usuário
