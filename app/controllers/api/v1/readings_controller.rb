@@ -22,7 +22,7 @@ module Api
         if reading.save
           render json: ReadingSerializer.new(reading).serializable_hash, status: :created
         else
-          render json: { errors: reading.errors.full_messages }, status: :unprocessable_content
+          render_errors(reading)
         end
       end
 

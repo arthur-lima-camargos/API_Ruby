@@ -61,10 +61,6 @@ module Api
         params.permit(:sensor_type)
       end
 
-      def render_errors(record)
-        render json: { errors: record.errors.full_messages }, status: :unprocessable_content
-      end
-
       # Um sensor_type fora do enum levanta ArgumentError já na atribuição (antes
       # das validações), então o traduzimos para um 422 amigável em vez de 500.
       def render_invalid_type

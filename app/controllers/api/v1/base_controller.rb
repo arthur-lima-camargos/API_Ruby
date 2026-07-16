@@ -34,6 +34,12 @@ module Api
       def render_unauthorized
         render json: { error: "Não autenticado" }, status: :unauthorized
       end
+
+      # Resposta 422 padrão para falhas de validação, compartilhada pelos
+      # controllers de recursos (create/update).
+      def render_errors(record)
+        render json: { errors: record.errors.full_messages }, status: :unprocessable_content
+      end
     end
   end
 end

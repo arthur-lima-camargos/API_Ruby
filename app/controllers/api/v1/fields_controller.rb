@@ -50,10 +50,6 @@ module Api
       def field_params
         params.permit(:name, :crop)
       end
-
-      def render_errors(record)
-        render json: { errors: record.errors.full_messages }, status: :unprocessable_content
-      end
     end
   end
 end
