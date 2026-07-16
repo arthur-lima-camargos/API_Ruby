@@ -110,8 +110,9 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [ ] (Opcional) simulador de leituras ao vivo
 
 ### Fase 7 — Testes e qualidade
-- [ ] Specs de model e de request
-- [ ] RuboCop sem offenses
+- [x] Specs de model e de request (117 exemplos: models, requests e services)
+- [x] RuboCop sem offenses
+- [x] Brakeman (segurança) e bundler-audit (CVEs) sem alertas
 
 ## Como rodar
 
@@ -140,4 +141,11 @@ bundle exec rspec
 ```bash
 bundle exec rubocop
 bundle exec rubocop -A   # autocorreção segura
+```
+
+Análise de segurança e dependências:
+
+```bash
+bundle exec brakeman              # análise estática de segurança
+bundle exec bundle-audit check --update   # CVEs conhecidas nas gems
 ```
