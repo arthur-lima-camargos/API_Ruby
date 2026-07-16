@@ -10,6 +10,16 @@ Rails.application.routes.draw do
       # Autenticação (endpoints públicos)
       post "signup", to: "registrations#create"
       post "login",  to: "sessions#create"
+
+      # Recursos de negócio (exigem JWT, escopados por current_user).
+      # Shallow nesting: coleção/criação carregam o pai na URL; ações de membro
+      # (show/update/destroy) ficam flat, pelo id próprio do recurso.
+      resources :farms do
+        resources :fields, shallow: true
+      end
+      resources :fields, only: [] do
+        resources :sensors, shallow: true
+      end
     end
   end
 
