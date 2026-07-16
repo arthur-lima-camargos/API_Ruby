@@ -58,5 +58,21 @@ RSpec.describe User, type: :model do
       create(:farm, user: user)
       expect { user.destroy }.to change(Farm, :count).by(-1)
     end
+
+    it "acessa os talhões através das fazendas (has_many :through)" do
+      user = create(:user)
+      field = create(:field, farm: create(:farm, user: user))
+      create(:field, farm: create(:farm)) # de outro usuário
+
+      expect(user.fields).to contain_exactly(field)
+    end
+
+    it "acessa os sensores através dos talhões (has_many :through)" do
+      user = create(:user)
+      sensor = create(:sensor, field: create(:field, farm: create(:farm, user: user)))
+      create(:sensor, field: create(:field, farm: create(:farm))) # de outro usuário
+
+      expect(user.sensors).to contain_exactly(sensor)
+    end
   end
 end
