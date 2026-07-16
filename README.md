@@ -45,17 +45,24 @@ Faixas usadas na simulação de dados: umidade 20–80%, temperatura 10–40 °C
 
 Versionados sob `/api/v1/`. Exceto `signup` e `login`, todas as rotas exigem o header `Authorization: Bearer <token>`.
 
-| Método | Rota                                     | Descrição                       |
-|--------|------------------------------------------|---------------------------------|
-| POST   | `/api/v1/signup`                         | Cria usuário e retorna um JWT   |
-| POST   | `/api/v1/login`                          | Autentica e retorna um JWT      |
-| GET    | `/api/v1/farms`                          | Lista fazendas do usuário       |
-| POST   | `/api/v1/farms`                          | Cria fazenda                    |
-| GET    | `/api/v1/fields`                         | Lista talhões                   |
-| GET    | `/api/v1/sensors`                        | Lista sensores                  |
-| POST   | `/api/v1/sensors/:id/readings`           | Registra uma leitura            |
-| GET    | `/api/v1/sensors/:id/readings`           | Histórico de leituras do sensor |
-| GET    | `/api/v1/sensors/:id/summary?period=7d`  | Médias e alertas no período     |
+Talhões e sensores usam **shallow nesting**: coleção e criação carregam o pai na URL; as demais ações usam o id próprio do recurso.
+
+| Método            | Rota                                     | Descrição                        |
+|-------------------|------------------------------------------|----------------------------------|
+| POST              | `/api/v1/signup`                         | Cria usuário e retorna um JWT    |
+| POST              | `/api/v1/login`                          | Autentica e retorna um JWT       |
+| GET               | `/api/v1/farms`                          | Lista fazendas do usuário        |
+| POST              | `/api/v1/farms`                          | Cria fazenda                     |
+| GET/PATCH/DELETE  | `/api/v1/farms/:id`                      | Mostra, atualiza ou remove       |
+| GET               | `/api/v1/farms/:farm_id/fields`          | Lista talhões da fazenda         |
+| POST              | `/api/v1/farms/:farm_id/fields`          | Cria talhão na fazenda           |
+| GET/PATCH/DELETE  | `/api/v1/fields/:id`                     | Mostra, atualiza ou remove       |
+| GET               | `/api/v1/fields/:field_id/sensors`       | Lista sensores do talhão         |
+| POST              | `/api/v1/fields/:field_id/sensors`       | Cria sensor no talhão            |
+| GET/PATCH/DELETE  | `/api/v1/sensors/:id`                    | Mostra, atualiza ou remove       |
+| POST              | `/api/v1/sensors/:id/readings`           | Registra uma leitura _(Fase 5)_  |
+| GET               | `/api/v1/sensors/:id/readings`           | Histórico de leituras _(Fase 5)_ |
+| GET               | `/api/v1/sensors/:id/summary?period=7d`  | Médias e alertas _(Fase 5)_      |
 
 O parâmetro `period` do `/summary` aceita valores como `24h`, `7d` ou `30d` (padrão: `7d`).
 
@@ -87,8 +94,8 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [ ] Escopo de dados a partir de `current_user` (aplicado nos endpoints da Fase 4)
 
 ### Fase 4 — Endpoints REST (CRUD)
-- [ ] Farms, Fields e Sensors escopados por usuário
-- [ ] Respostas formatadas com jsonapi-serializer
+- [x] Farms, Fields e Sensors escopados por usuário (CRUD completo)
+- [x] Respostas formatadas com jsonapi-serializer
 
 ### Fase 5 — Leituras e agregações
 - [ ] Registrar e listar leituras

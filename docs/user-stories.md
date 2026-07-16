@@ -66,6 +66,8 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
 **Como** produtor, **quero** listar os talhões de uma fazenda, **para** escolher onde instalar/consultar sensores.
 - **Aceite:** listagem escopada por fazenda e por usuário.
 
+> **Nota (Fase 4):** talhões expõem CRUD completo (show/update/destroy além de index/create), sempre escopado ao dono. Coleção e criação usam shallow nesting sob `/farms/:farm_id/fields`; as demais ações usam `/fields/:id`. Recurso de outro usuário responde 404.
+
 ---
 
 ## Épico 4 — Sensores (Sensors)
@@ -77,6 +79,8 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
 ### US-4.2 — Listar sensores
 **Como** produtor, **quero** listar sensores (por talhão ou todos), **para** ter visão do que está instalado.
 - **Aceite:** listagem escopada por usuário; filtro opcional por talhão e por tipo.
+
+> **Nota (Fase 4):** sensores expõem CRUD completo, escopado ao dono. Coleção e criação usam shallow nesting sob `/fields/:field_id/sensors`; as demais ações usam `/sensors/:id`. `sensor_type` fora do enum retorna 422 (não 500). A listagem "todos os sensores" flat e os filtros opcionais ainda não foram implementados — por ora a listagem é sempre por talhão.
 
 ---
 
