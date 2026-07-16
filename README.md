@@ -149,3 +149,7 @@ Análise de segurança e dependências:
 bundle exec brakeman              # análise estática de segurança
 bundle exec bundle-audit check --update   # CVEs conhecidas nas gems
 ```
+
+## Licença
+
+Distribuído sob a licença **MIT** — veja o arquivo [`LICENSE`](LICENSE). Você pode usar, copiar, modificar e redistribuir o código, inclusive comercialmente, mantendo o aviso de copyright.
