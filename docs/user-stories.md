@@ -99,6 +99,8 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
   - `GET /api/v1/sensors/:id/readings` retorna leituras ordenadas por `recorded_at`.
   - Suporta filtro por intervalo de datas e paginação.
 
+> **Nota (Fase 5):** rota real `GET /api/v1/sensors/:sensor_id/readings`, escopada ao dono (sensor alheio → 404). Ordem cronológica (mais antigas primeiro). Filtro por `?from=&to=` (ISO 8601) e paginação `?page=&per_page=` (padrão 50, teto 100), sem gem externa. `POST` usa `Time.current` quando `recorded_at` é omitido; valor fora da faixa é aceito (vira alerta, não erro).
+
 ---
 
 ## Épico 6 — Médias e Alertas
@@ -116,6 +118,8 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
   - O `summary` inclui um status de alerta (`ok`, `low`, `high`) por faixa configurável por tipo.
   - Faixas padrão: umidade 20–80%, temperatura 10–40 °C, pH 4–8.
   - Regra de alerta isolada em Service Object.
+
+> **Nota (Fase 5):** dois service objects — `ReadingsSummary` (agrega `count`/`average`/`min`/`max` via SQL no período) e `AlertEvaluator` (traduz um valor em `ok`/`low`/`high` pela faixa do tipo). `GET /api/v1/sensors/:id/summary?period=24h|7d|30d` (padrão `7d`; valor desconhecido cai no padrão). O `alert` é calculado sobre a **média** do período; sem leituras, `average`/`alert` vêm `null`.
 
 ---
 

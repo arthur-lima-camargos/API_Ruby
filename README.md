@@ -60,11 +60,13 @@ Talhões e sensores usam **shallow nesting**: coleção e criação carregam o p
 | GET               | `/api/v1/fields/:field_id/sensors`       | Lista sensores do talhão         |
 | POST              | `/api/v1/fields/:field_id/sensors`       | Cria sensor no talhão            |
 | GET/PATCH/DELETE  | `/api/v1/sensors/:id`                    | Mostra, atualiza ou remove       |
-| POST              | `/api/v1/sensors/:id/readings`           | Registra uma leitura _(Fase 5)_  |
-| GET               | `/api/v1/sensors/:id/readings`           | Histórico de leituras _(Fase 5)_ |
-| GET               | `/api/v1/sensors/:id/summary?period=7d`  | Médias e alertas _(Fase 5)_      |
+| POST              | `/api/v1/sensors/:sensor_id/readings`    | Registra uma leitura             |
+| GET               | `/api/v1/sensors/:sensor_id/readings`    | Histórico de leituras do sensor  |
+| GET               | `/api/v1/sensors/:id/summary?period=7d`  | Médias e alertas no período      |
 
-O parâmetro `period` do `/summary` aceita valores como `24h`, `7d` ou `30d` (padrão: `7d`).
+O histórico (`GET .../readings`) aceita recorte por intervalo (`?from=&to=`, ISO 8601) e paginação (`?page=&per_page=`, padrão 50, teto 100), em ordem cronológica.
+
+O parâmetro `period` do `/summary` aceita valores como `24h`, `7d` ou `30d` (padrão: `7d`). A resposta traz `count`, `average`, `min`, `max` e um `alert` (`ok`/`low`/`high`) calculado sobre a média conforme a faixa ideal do tipo de sensor (umidade 20–80, temperatura 10–40, pH 4–8).
 
 ## Progresso
 
@@ -98,10 +100,10 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [x] Respostas formatadas com jsonapi-serializer
 
 ### Fase 5 — Leituras e agregações
-- [ ] Registrar e listar leituras
-- [ ] Service object: médias por período
-- [ ] Service object: alertas por faixa ideal
-- [ ] Endpoint `summary`
+- [x] Registrar e listar leituras (com filtro por intervalo e paginação)
+- [x] Service object: médias por período (`ReadingsSummary`)
+- [x] Service object: alertas por faixa ideal (`AlertEvaluator`)
+- [x] Endpoint `summary`
 
 ### Fase 6 — Dados de simulação
 - [ ] Seeds com dados plausíveis
