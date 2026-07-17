@@ -62,4 +62,7 @@ group :development, :test do
 
   # Fake data for tests and seeds
   gem "faker"
+
+  # Relatório de cobertura de testes (carregado em spec_helper, antes do app)
+  gem "simplecov", require: false
 end
