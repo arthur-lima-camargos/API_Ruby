@@ -111,9 +111,10 @@ Diário de bordo do aprendizado. Cada fase é marcada conforme avançamos.
 - [ ] (Opcional) simulador de leituras ao vivo
 
 ### Fase 7 — Testes e qualidade
-- [x] Specs de model e de request (117 exemplos: models, requests e services)
+- [x] Specs de model e de request (126 exemplos: models, requests e services)
 - [x] RuboCop sem offenses
 - [x] Brakeman (segurança) e bundler-audit (CVEs) sem alertas
+- [x] Cobertura de testes com SimpleCov (~98%)
 
 ## Como rodar
 
@@ -136,6 +137,8 @@ O `db:seed` cria uma conta demo — **`demo@fazenda.com` / `password123`** — c
 ```bash
 bundle exec rspec
 ```
+
+A suíte gera um relatório de cobertura com **SimpleCov** em `coverage/index.html` (abra no navegador) a cada execução.
 
 ## Qualidade de código
 

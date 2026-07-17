@@ -82,6 +82,15 @@ RSpec.describe "Api::V1::Farms", type: :request do
       expect(response).to have_http_status(:not_found)
       expect(alheia.reload.name).to eq("Original")
     end
+
+    it "retorna 422 ao atualizar com nome em branco" do
+      farm = create(:farm, user: user, name: "Original")
+
+      patch "/api/v1/farms/#{farm.id}", params: { name: "" }, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(farm.reload.name).to eq("Original")
+    end
   end
 
   describe "DELETE /api/v1/farms/:id" do

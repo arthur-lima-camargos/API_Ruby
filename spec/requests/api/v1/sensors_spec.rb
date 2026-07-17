@@ -106,6 +106,15 @@ RSpec.describe "Api::V1::Sensors", type: :request do
 
       expect(response).to have_http_status(:not_found)
     end
+
+    it "retorna 422 sem sensor_type (validação de presença)" do
+      expect do
+        post "/api/v1/fields/#{field.id}/sensors", headers: auth_headers(user)
+      end.not_to change(field.sensors, :count)
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.parsed_body["errors"]).to be_present
+    end
   end
 
   describe "GET /api/v1/sensors/:id" do

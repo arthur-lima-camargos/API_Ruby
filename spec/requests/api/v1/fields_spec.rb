@@ -88,6 +88,15 @@ RSpec.describe "Api::V1::Fields", type: :request do
       expect(response).to have_http_status(:ok)
       expect(field.reload.crop).to eq("Milho")
     end
+
+    it "retorna 422 ao atualizar com nome em branco" do
+      field = create(:field, farm: farm, name: "Original")
+
+      patch "/api/v1/fields/#{field.id}", params: { name: "" }, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(field.reload.name).to eq("Original")
+    end
   end
 
   describe "DELETE /api/v1/fields/:id" do
