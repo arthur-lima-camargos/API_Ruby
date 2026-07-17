@@ -80,7 +80,7 @@ Histórias de usuário que definem o escopo funcional da **API**, organizadas po
 **Como** produtor, **quero** listar sensores (por talhão ou todos), **para** ter visão do que está instalado.
 - **Aceite:** listagem escopada por usuário; filtro opcional por talhão e por tipo.
 
-> **Nota (Fase 4):** sensores expõem CRUD completo, escopado ao dono. Coleção e criação usam shallow nesting sob `/fields/:field_id/sensors`; as demais ações usam `/sensors/:id`. `sensor_type` fora do enum retorna 422 (não 500). A listagem "todos os sensores" flat e os filtros opcionais ainda não foram implementados — por ora a listagem é sempre por talhão.
+> **Nota (Fase 4):** sensores expõem CRUD completo, escopado ao dono. Coleção e criação usam shallow nesting sob `/fields/:field_id/sensors`; as demais ações usam `/sensors/:id`. `sensor_type` fora do enum retorna 422 (não 500). A listagem flat `GET /api/v1/sensors` retorna todos os sensores do usuário, com filtros opcionais por talhão (`?field_id=`, talhão alheio → 404) e por tipo (`?sensor_type=`, valor fora do enum → 422).
 
 ---
 

@@ -59,12 +59,13 @@ Talhões e sensores usam **shallow nesting**: coleção e criação carregam o p
 | GET/PATCH/DELETE  | `/api/v1/fields/:id`                     | Mostra, atualiza ou remove       |
 | GET               | `/api/v1/fields/:field_id/sensors`       | Lista sensores do talhão         |
 | POST              | `/api/v1/fields/:field_id/sensors`       | Cria sensor no talhão            |
+| GET               | `/api/v1/sensors`                        | Lista todos os sensores do usuário |
 | GET/PATCH/DELETE  | `/api/v1/sensors/:id`                    | Mostra, atualiza ou remove       |
 | POST              | `/api/v1/sensors/:sensor_id/readings`    | Registra uma leitura             |
 | GET               | `/api/v1/sensors/:sensor_id/readings`    | Histórico de leituras do sensor  |
 | GET               | `/api/v1/sensors/:id/summary?period=7d`  | Médias e alertas no período      |
 
-O histórico (`GET .../readings`) aceita recorte por intervalo (`?from=&to=`, ISO 8601) e paginação (`?page=&per_page=`, padrão 50, teto 100), em ordem cronológica.
+A listagem flat (`GET /api/v1/sensors`) aceita filtros opcionais por talhão (`?field_id=`) e por tipo (`?sensor_type=`); tipo fora do enum responde 422. O histórico (`GET .../readings`) aceita recorte por intervalo (`?from=&to=`, ISO 8601) e paginação (`?page=&per_page=`, padrão 50, teto 100), em ordem cronológica.
 
 O parâmetro `period` do `/summary` aceita valores como `24h`, `7d` ou `30d` (padrão: `7d`). A resposta traz `count`, `average`, `min`, `max` e um `alert` (`ok`/`low`/`high`) calculado sobre a média conforme a faixa ideal do tipo de sensor (umidade 20–80, temperatura 10–40, pH 4–8).
 
