@@ -1,11 +1,21 @@
 module Api
   module V1
     class SensorsController < BaseController
-      before_action :set_field, only: %i[index create]
       before_action :set_sensor, only: %i[show update destroy summary]
 
+      # Serve duas rotas: aninhada (/fields/:field_id/sensors) e flat (/sensors).
+      # Na flat, filtros opcionais por talhão (?field_id=) e por tipo (?sensor_type=),
+      # sempre escopados ao usuário. Tipo fora do enum → 422 (mesmo contrato do create).
       def index
-        render json: SensorSerializer.new(@field.sensors).serializable_hash
+        sensors = params[:field_id].present? ? owned_field.sensors : current_user.sensors
+
+        if params[:sensor_type].present?
+          return render_invalid_type unless Sensor.sensor_types.key?(params[:sensor_type])
+
+          sensors = sensors.where(sensor_type: params[:sensor_type])
+        end
+
+        render json: SensorSerializer.new(sensors).serializable_hash
       end
 
       # Médias/mín/máx + alerta do sensor no período (?period=24h|7d|30d).
@@ -19,7 +29,7 @@ module Api
       end
 
       def create
-        sensor = @field.sensors.build(sensor_params)
+        sensor = owned_field.sensors.build(sensor_params)
 
         if sensor.save
           render json: SensorSerializer.new(sensor).serializable_hash, status: :created
@@ -47,9 +57,10 @@ module Api
 
       private
 
-      # Coleção/criação: aninhadas no talhão (shallow) e escopadas ao usuário.
-      def set_field
-        @field = current_user.fields.find(params[:field_id])
+      # Talhão do usuário pelo id da rota/query. Talhão de outro usuário → 404,
+      # sem vazar existência. Usado na criação (aninhada) e no filtro ?field_id=.
+      def owned_field
+        current_user.fields.find(params[:field_id])
       end
 
       # Ações de membro: id próprio do sensor, escopado pelo usuário via associação.

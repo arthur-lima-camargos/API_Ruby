@@ -20,7 +20,8 @@ Rails.application.routes.draw do
       resources :fields, only: [] do
         resources :sensors, shallow: true
       end
-      resources :sensors, only: [] do
+      # Listagem flat de todos os sensores do usuário (?field_id= e ?sensor_type=).
+      resources :sensors, only: %i[index] do
         # Leituras só são criadas e listadas (sem editar/remover uma leitura solta).
         resources :readings, only: %i[index create]
         # Médias + alertas do sensor no período (?period=24h|7d|30d).

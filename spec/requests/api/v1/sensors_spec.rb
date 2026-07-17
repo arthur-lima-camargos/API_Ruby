@@ -23,6 +23,62 @@ RSpec.describe "Api::V1::Sensors", type: :request do
     end
   end
 
+  describe "GET /api/v1/sensors" do
+    it "lista todos os sensores do usuário (de todos os talhões)" do
+      outro_talhao = create(:field, farm: create(:farm, user: user))
+      s1 = create(:sensor, field: field)
+      s2 = create(:sensor, field: outro_talhao)
+      create(:sensor, field: create(:field, farm: create(:farm, user: other_user)))
+
+      get "/api/v1/sensors", headers: auth_headers(user)
+
+      expect(response).to have_http_status(:ok)
+      ids = response.parsed_body["data"].map { |s| s["id"].to_i }
+      expect(ids).to contain_exactly(s1.id, s2.id)
+    end
+
+    it "filtra por tipo (?sensor_type=)" do
+      humidade = create(:sensor, field: field, sensor_type: :humidity)
+      create(:sensor, field: field, sensor_type: :temperature)
+
+      get "/api/v1/sensors", params: { sensor_type: "humidity" }, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:ok)
+      ids = response.parsed_body["data"].map { |s| s["id"].to_i }
+      expect(ids).to contain_exactly(humidade.id)
+    end
+
+    it "filtra por talhão (?field_id=)" do
+      meu = create(:sensor, field: field)
+      create(:sensor, field: create(:field, farm: create(:farm, user: user)))
+
+      get "/api/v1/sensors", params: { field_id: field.id }, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:ok)
+      ids = response.parsed_body["data"].map { |s| s["id"].to_i }
+      expect(ids).to contain_exactly(meu.id)
+    end
+
+    it "retorna 422 para tipo fora do enum" do
+      get "/api/v1/sensors", params: { sensor_type: "radiacao" }, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it "retorna 404 ao filtrar por talhão de outro usuário" do
+      alheio = create(:field, farm: create(:farm, user: other_user))
+
+      get "/api/v1/sensors", params: { field_id: alheio.id }, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "exige autenticação" do
+      get "/api/v1/sensors"
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
   describe "POST /api/v1/fields/:field_id/sensors" do
     it "cria um sensor com tipo válido do enum" do
       expect do
